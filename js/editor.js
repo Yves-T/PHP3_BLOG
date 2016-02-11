@@ -38,7 +38,6 @@ var FormValidator = (function () {
     return FormValidator;
 })();
 
-//var that = this;
 document.addEventListener('DOMContentLoaded', function () {
     new FormValidator();
 }, false);
