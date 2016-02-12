@@ -48,4 +48,12 @@ class Blog_Entry_Table extends Table
         $statement = $this->makeStatement($sql, $data);
     }
 
+    public function searchEntry($searchTerm)
+    {
+        $sql = "SELECT entry_id, entry_title FROM simple_blog.blog_entry WHERE entry_title LIKE ? OR entry_text LIKE ?";
+        $data = array("%$searchTerm%", "%$searchTerm%");
+        $statement = $this->makeStatement($sql, $data);
+        return $statement;
+    }
+
 }
