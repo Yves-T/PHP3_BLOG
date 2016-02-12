@@ -10,7 +10,6 @@ $pageData = new Page_Data();
 $pageData->title = "PHP/MySQL Blog Demo";
 $pageData->addCSS('css/blog.css');
 $pageData->content = "<h1>$pageData->title</h1>";
-//$pageData->content .= "<h1>All is good</h1>";
 $pageData->content .= include_once "views/search_form_html.php";
 
 $controller = (isset($_GET['page']) && $_GET['page'] === 'search') ? 'search' : 'blog';
