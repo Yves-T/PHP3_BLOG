@@ -1,14 +1,9 @@
 <?php
 
-class Blog_Entry_Table
+include_once "models/Table.class.php";
+
+class Blog_Entry_Table extends Table
 {
-    private $db;
-
-    public function __construct($db)
-    {
-        $this->db = $db;
-    }
-
     public function saveEntry($title, $entry)
     {
         $sql = "INSERT INTO simple_blog.blog_entry(entry_title,entry_text) VALUES ('$title','$entry')";
@@ -53,19 +48,4 @@ class Blog_Entry_Table
         $statement = $this->makeStatement($sql, $data);
     }
 
-    public function makeStatement($sql, $data = NULL)
-    {
-        $statement = $this->db->prepare($sql);
-        try {
-            //usethedynamicdataandrunthequery
-            $statement->execute($data);
-
-        } catch
-        (Exception $e) {
-            $exceptionMessage = "<p>You tried to run this sql: $sql <p>  <p> Exception:$e </p> ";
-            trigger_error($exceptionMessage);
-        }
-
-        return $statement;
-    }
 }

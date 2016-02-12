@@ -1,23 +1,14 @@
 <?php
+include_once "models/Table.class.php";
 
-class Comment_Table
+class Comment_Table extends Table
 {
-    private $db;
-
-    public function __construct($db)
+    // create
+    public function saveComment($entryId, $author, $txt)
     {
-        $this->db = $db;
-    }
-
-    private function makeStatement($sql, $data = null)
-    {
-        $statement = $this->db->prepare($sql);
-        try {
-            $statement->execute($data);
-        } catch (Exception $e) {
-            $exceptionMessage = "<p>You tried to run this sql: $sql <p> <p>Exception: $e</p>";
-            trigger_error($exceptionMessage);
-        }
+        $sql = "INSERT INTO simple_blog.comment (entry_id, author, txt) VALUES (?, ?, ?)";
+        $data = array($entryId, $author, $txt);
+        $statement = $this->makeStatement($sql, $data);
         return $statement;
     }
 }
