@@ -20,4 +20,11 @@ class Comment_Table extends Table
         $statement = $this->makeStatement($sql, $data);
         return $statement;
     }
+
+    public function deleteByEntryId($id)
+    {
+        $sql = "DELETE FROM simple_blog.comment WHERE entry_id = ?";
+        $data = array($id);
+        $statement = $this->makeStatement($sql, $data);
+    }
 }
