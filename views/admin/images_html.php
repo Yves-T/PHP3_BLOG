@@ -1,5 +1,4 @@
 <?php
-//complete code for views/admin/images-html.php
 if (isset($uploadMessage) === false) {
     $uploadMessage = "Upload a new image";
 }
