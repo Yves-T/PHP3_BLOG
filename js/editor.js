@@ -9,9 +9,21 @@ var FormValidator = (function () {
         this.warning = document.querySelector('form #title-warning');
         if (this.form) {
             this.setupFormSubmitHandler();
+            this.setupKeyUpTitleEventHandler();
             this.setupInvalidHandler();
             this.disableFireFoxRedBox();
         }
+    };
+
+    FormValidator.prototype.setupKeyUpTitleEventHandler = function () {
+        if(this.title) {
+            this.title.addEventListener('keyup', this.updateEditorMessage, false);
+        }
+    };
+
+    FormValidator.prototype.updateEditorMessage = function () {
+        var p = document.querySelector("#editor-message");
+        p.innerHTML = "Changes not saved!";
     };
 
     FormValidator.prototype.setupFormSubmitHandler = function () {
@@ -39,5 +51,17 @@ var FormValidator = (function () {
 })();
 
 document.addEventListener('DOMContentLoaded', function () {
-    new FormValidator();
+    var formValidator = new FormValidator();
+    if (tinymce) {
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'image',
+            setup: function (editor) {
+                editor.on('change', function (e) {
+                    formValidator.updateEditorMessage();
+                });
+            }
+        });
+    }
+
 }, false);
