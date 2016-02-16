@@ -5,6 +5,8 @@ class Uploader
     private $fileName;
     private $fileData;
     private $destination;
+    private $errorMessage;
+    private $errorCode;
 
     /**
      * Uploader constructor.
@@ -13,6 +15,7 @@ class Uploader
     {
         $this->fileName = $_FILES[$key]['name'];
         $this->fileData = $_FILES[$key]['tmp_name'];
+        $this->errorCode = ($_FILES[$key]['error']);
     }
 
     public function saveIn($folder)
@@ -22,14 +25,29 @@ class Uploader
 
     public function save()
     {
-        $folerIsWritable = is_writable($this->destination);
-        if ($folerIsWritable) {
-            $name = "$this->destination/$this->fileName";
-            $success = move_uploaded_file($this->fileData, $name);
+        if ($this->readyToUpload()) {
+            move_uploaded_file(
+                $this->fileData,
+                "$this->destination/$this->fileName");
         } else {
-            trigger_error("Cannot write to $this->destination");
-            $success = false;
+            $exc = new Exception($this->errorMessage);
+            throw $exc;
         }
-        return $success;
+    }
+
+    private function readyToUpload()
+    {
+        $folderIsWriteAble = is_writable($this->destination);
+        if ($folderIsWriteAble === false) {
+            //provide a meaningful error message
+            $this->errorMessage = "Error: destination folder is ";
+            $this->errorMessage .= "not writable, change permissions";
+            //indicate that code is NOT ready to upload file
+            $canUpload = false;
+        } else {
+            //assume no other errors - indicate we're ready to upload
+            $canUpload = true;
+        }
+        return $canUpload;
     }
 }
