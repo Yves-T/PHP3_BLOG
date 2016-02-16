@@ -9,8 +9,8 @@ return "<!doctype html>
     $pageData->embeddedStyle
 </head>
 <body>
-$pageData->content
 $pageData->scriptElements
+$pageData->content
 </body>
 </html>";
 ?>

@@ -14,6 +14,7 @@ $pageData = new Page_Data();
 $pageData->title = "PHP/MySQL Blog Demo";
 $pageData->addCSS('css/blog.css');
 $pageData->addScript('js/editor.js');
+$pageData->addScript('js/tinymce/tinymce.min.js');
 $pageData->content = "<h1>$pageData->title</h1>";
 
 // view
