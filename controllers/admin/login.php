@@ -4,5 +4,15 @@ if ($loginFormSubmitted) {
     echo "user is loggin in";
     $admin->login();
 }
-$view = include_once "views/admin/login_form_html.php";
+
+$loggingOut = isset ($_POST['logout']);
+if ($loggingOut) {
+    $admin->logout();
+}
+if ($admin->isLoggedIn()) {
+    $view = include_once "views/admin/logout_form_html.php";
+} else {
+    $view = include_once "views/admin/login_form_html.php";
+}
+
 return $view;
