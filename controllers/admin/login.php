@@ -1,8 +1,17 @@
 <?php
+include_once "models/Admin_Table.class.php";
 $loginFormSubmitted = isset($_POST['log-in']);
 if ($loginFormSubmitted) {
-    echo "user is loggin in";
-    $admin->login();
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    //create an object for communicating with the database table
+    $adminTable = new Admin_Table($db);
+    try {
+        $adminTable->checkCredentials($email, $password);
+        $admin->login();
+    } catch (Exception $e) {
+        // NOP
+    }
 }
 
 $loggingOut = isset ($_POST['logout']);

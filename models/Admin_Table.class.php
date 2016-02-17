@@ -25,4 +25,18 @@ class Admin_Table extends Table
             throw $e;
         }
     }
+
+    public function checkCredentials($email, $password)
+    {
+        $sql = "SELECT email FROM admin WHERE email = ? AND password = MD5(?)";
+        $data = array($email, $password);
+        $statement = $this->makeStatement($sql, $data);
+        if ($statement->rowCount() === 1) {
+            $out = true;
+        } else {
+            $loginProblem = new Exception("login failed!");
+            throw $loginProblem;
+        }
+        return $out;
+    }
 }
