@@ -15,7 +15,8 @@ class Blog_Entry_Table extends Table
     // read
     public function getAllEntries()
     {
-        $sql = "SELECT entry_id,entry_title, SUBSTRING(entry_text,1,150) AS intro FROM simple_blog.blog_entry";
+        $sql = "SELECT entry_id,entry_title, SUBSTRING(entry_text,1,150) AS intro FROM simple_blog.blog_entry  ";
+        $sql .= "ORDER BY date_created DESC";
         $statement = $this->db->prepare($sql);
 
         $statement = $this->makeStatement($sql);
